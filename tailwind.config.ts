@@ -1,8 +1,16 @@
+import { nextui } from "@nextui-org/react";
 import type { Config } from "tailwindcss";
 
 export default {
-  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+
+  ],
   theme: {
+    colors: {
+      'purple-volleytip': '#1f0738',
+      'blue-volleytip': '#05f8f2',
+    },
     extend: {
       fontFamily: {
         sans: [
@@ -15,8 +23,11 @@ export default {
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
         ],
-      },
+      }
     },
   },
-  plugins: [],
+  darkMode: "class",
+
+  plugins: [nextui()],
+
 } satisfies Config;
