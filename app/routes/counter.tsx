@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolleyballBall } from "@fortawesome/free-solid-svg-icons";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
 import {
   faSquareMinus,
   faHourglass,
@@ -18,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { ETeam, SetDto } from "~/dtos/dtos";
 import { Timer } from "~/components/timer";
+import { Actions } from "~/components/actions";
 
 export default function Counter() {
   const [localCount, setLocalCount] = useState<number>(0);
@@ -33,8 +33,8 @@ export default function Counter() {
   const [isFinishedBefore, setIsFinishedBefore] = useState<boolean>(false);
   const [teamWinnerFinishedBefore, setTeamWinnerFinishedBefore] =
     useState<ETeam>();
+
   const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
-  useState<ETeam>();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -162,46 +162,7 @@ export default function Counter() {
               />
             </span>
           </Button>
-
-          <div className="flex justify-start m-auto mt-2 w-56">
-            <Button
-              className="min-w-12 bg-transparent"
-              style={{ color: "white" }}
-              onClick={() =>
-                setVisitorCount((prev) => (prev > 0 ? prev - 1 : prev))
-              }
-            >
-              <FontAwesomeIcon
-                icon={faSquareMinus}
-                color="white"
-                className="w-6 h-6 m-auto"
-              />
-            </Button>
-
-            <Button className="min-w-12 bg-transparent">
-              <FontAwesomeIcon
-                icon={faHourglass}
-                color="white"
-                className="w-6 h-6 m-auto"
-                onClick={() => setIsTimerActive(true)}
-              />
-            </Button>
-            <Button className="min-w-12 bg-transparent">
-              <FontAwesomeIcon
-                icon={faHourglass}
-                color="white"
-                className="w-6 h-6 m-auto"
-              />
-            </Button>
-            <div className="m-auto">
-              {isTimerActive && (
-                <Timer
-                  isTimerActive={isTimerActive}
-                  setIsTimerActive={setIsTimerActive}
-                />
-              )}
-            </div>
-          </div>
+          <Actions setCount={setVisitorCount} />
         </div>
 
         <div className="text-center flex-col justify-center items-center">
@@ -271,18 +232,7 @@ export default function Counter() {
               />
             </span>
           </Button>
-
-          <div className="flex justify-start m-auto mt-2 w-56">
-            <button
-              className="bg-transparent text-white font-bold w-8 h-8 text-2xl rounded-full"
-              style={{ color: "white" }}
-              onClick={() =>
-                setLocalCount((prev) => (prev > 0 ? prev - 1 : prev))
-              }
-            >
-              -
-            </button>
-          </div>
+          <Actions setCount={setVisitorCount} />
         </div>
       </div>
     </main>
