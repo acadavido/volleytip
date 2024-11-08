@@ -1,10 +1,4 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolleyballBall } from "@fortawesome/free-solid-svg-icons";
-import {
-  faSquareMinus,
-  faHourglass,
-} from "@fortawesome/free-regular-svg-icons";
 import { Set } from "../components/set";
 import {
   Modal,
@@ -16,7 +10,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { ETeam, SetDto } from "~/dtos/dtos";
-import { Timer } from "~/components/timer";
 import { Actions } from "~/components/actions";
 
 export default function Counter() {
@@ -34,8 +27,6 @@ export default function Counter() {
   const [teamWinnerFinishedBefore, setTeamWinnerFinishedBefore] =
     useState<ETeam>();
 
-  const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const incrementCount = (team: ETeam) => {
@@ -46,7 +37,8 @@ export default function Counter() {
       ) {
         setVisitorCount(visitorCount + 1);
         setLastPressed(ETeam.VISITOR);
-        if (visitorCount >= 24 && visitorCount - localCount > 2) {
+        setIsFinishedBefore(false);
+        if (visitorCount >= 25 && visitorCount - localCount >= 1) {
           onOpen();
         }
       }
@@ -57,8 +49,8 @@ export default function Counter() {
       ) {
         setLocalCount(localCount + 1);
         setLastPressed(ETeam.LOCAL);
-
-        if (localCount >= 24 && localCount - visitorCount > 2) {
+        setIsFinishedBefore(false);
+        if (localCount >= 25 && localCount - visitorCount >= 1) {
           onOpen();
         }
       }
@@ -102,7 +94,13 @@ export default function Counter() {
 
   return (
     <main className="flex flex-wrap justify-center p-10 bg-purple-volleytip min-h-screen">
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        hideCloseButton={true}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -143,7 +141,7 @@ export default function Counter() {
             defaultValue="Visitor"
           />
           <Button
-            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded relative"
+            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded-md relative"
             disableRipple
             onClick={() => {
               incrementCount(ETeam.VISITOR);
@@ -155,10 +153,10 @@ export default function Counter() {
                 lastPressed === ETeam.VISITOR ? "flex" : "hidden"
               }`}
             >
-              <FontAwesomeIcon
+              <img
                 className="h-auto"
-                color="purple-volleytip"
-                icon={faVolleyballBall}
+                src="/public/logo-volleytip.png"
+                alt="Volleytip Icon"
               />
             </span>
           </Button>
@@ -167,7 +165,7 @@ export default function Counter() {
 
         <div className="text-center flex-col justify-center items-center">
           <button
-            className="bg-purple-volleytip font-bold text-7xl w-20 rounded shadow hover:bg-blue-600 transition duration-300"
+            className="bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
             style={{ color: "white" }}
             onClick={() => {
               if (visitorSetCount < 3) {
@@ -182,7 +180,7 @@ export default function Counter() {
           </button>
 
           <button
-            className="mt-16 bg-purple-volleytip font-bold text-7xl w-20 rounded shadow hover:bg-blue-600 transition duration-300"
+            className="mt-16 bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
             style={{ color: "white" }}
             onClick={() => {
               if (localSetCount < 3) {
@@ -213,7 +211,7 @@ export default function Counter() {
             defaultValue="Local"
           />
           <Button
-            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded relative"
+            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded-md relative"
             disableRipple
             onClick={() => {
               incrementCount(ETeam.LOCAL);
@@ -225,10 +223,10 @@ export default function Counter() {
                 lastPressed === ETeam.LOCAL ? "flex" : "hidden"
               }`}
             >
-              <FontAwesomeIcon
+              <img
                 className="h-auto"
-                color="purple-volleytip"
-                icon={faVolleyballBall}
+                src="/public/logo-volleytip.png"
+                alt="Volleytip Icon"
               />
             </span>
           </Button>

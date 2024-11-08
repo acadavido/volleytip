@@ -31,6 +31,7 @@ export function Actions({ setCount }: any) {
           <Button
             className="min-w-12 bg-transparent"
             isDisabled={isFirstTimerTriggered}
+            disabled={isTimerActive}
           >
             <FontAwesomeIcon
               icon={faHourglass}
@@ -45,6 +46,7 @@ export function Actions({ setCount }: any) {
           <Button
             className="min-w-12 bg-transparent"
             isDisabled={isSecondTimerTriggered}
+            disabled={isTimerActive}
           >
             <FontAwesomeIcon
               icon={faHourglass}
