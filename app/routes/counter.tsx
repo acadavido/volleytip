@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Set } from "../components/set";
 import {
@@ -11,23 +12,51 @@ import {
 } from "@nextui-org/react";
 import { ETeam, SetDto } from "~/dtos/dtos";
 import { Actions } from "~/components/actions";
+import { getStoredValue, setStoredValues } from "~/utils/utils";
+React.useLayoutEffect = React.useEffect;
 
 export default function Counter() {
-  const [localCount, setLocalCount] = useState<number>(0);
-  const [visitorCount, setVisitorCount] = useState<number>(0);
+  const [localCount, setLocalCount] = useState(0);
 
-  const [localSetCount, setLocalSetCount] = useState<number>(0);
-  const [visitorSetCount, setVisitorSetCount] = useState<number>(0);
+  const [visitorCount, setVisitorCount] = useState(0);
+
+  const [localSetCount, setLocalSetCount] = useState(0);
+
+  const [visitorSetCount, setVisitorSetCount] = useState(0);
+
+  const [setsFinished, setSetsFinished] = useState<SetDto[]>([]);
 
   const [lastPressed, setLastPressed] = useState<ETeam>();
 
-  const [setsFinished, setSetsFinished] = useState<SetDto[]>([]);
+  const [isReset, setIsReset] = useState(false);
 
   const [isFinishedBefore, setIsFinishedBefore] = useState<boolean>(false);
   const [teamWinnerFinishedBefore, setTeamWinnerFinishedBefore] =
     useState<ETeam>();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  React.useEffect(() => {
+    localCount !== 0 && setStoredValues("localCount", localCount);
+    visitorCount !== 0 && setStoredValues("visitorCount", visitorCount);
+    localSetCount !== 0 && setStoredValues("localSetCount", localSetCount);
+    visitorSetCount !== 0 &&
+      setStoredValues("visitorSetCount", visitorSetCount);
+    setsFinished.length > 0 && setStoredValues("setsFinished", setsFinished);
+  }, [localCount, visitorCount, localSetCount, visitorSetCount, setsFinished]);
+
+  React.useLayoutEffect(() => {
+    const localCount = getStoredValue("localCount", 0);
+    const visitorCount = getStoredValue("visitorCount", 0);
+    const localSetCount = getStoredValue("localSetCount", 0);
+    const visitorSetCount = getStoredValue("visitorSetCount", 0);
+    const setsFinished = getStoredValue("setsFinished", []);
+    setLocalCount(localCount);
+    setVisitorCount(visitorCount);
+    setLocalSetCount(localSetCount);
+    setVisitorSetCount(visitorSetCount);
+    setSetsFinished(setsFinished);
+  }, []);
 
   const incrementCount = (team: ETeam) => {
     if (team === ETeam.VISITOR) {
@@ -92,8 +121,22 @@ export default function Counter() {
     }
   };
 
+  const handleReset = () => {
+    setIsReset(true);
+    setVisitorCount(0);
+    setLocalCount(0);
+    setVisitorSetCount(0);
+    setLocalSetCount(0);
+    setSetsFinished([]);
+    setStoredValues("localCount", 0);
+    setStoredValues("visitorCount", 0);
+    setStoredValues("localSetCount", 0);
+    setStoredValues("visitorSetCount", 0);
+    setStoredValues("setsFinished", []);
+  };
+
   return (
-    <main className="flex flex-wrap justify-center p-10 bg-purple-volleytip min-h-screen">
+    <main className="flex flex-col justify-center p-10 bg-purple-volleytip min-h-screen">
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -131,7 +174,14 @@ export default function Counter() {
           )}
         </ModalContent>
       </Modal>
-      <div className="flex mt-32 flex flex-wrap justify-center">
+      <div className="justify-center mx-auto mb-10">
+        <img
+          className="h-44"
+          src="/app/assets/logo-volleytip-vertical.png"
+          alt="Volleytip Icon"
+        />
+      </div>
+      <div className="flex flex-wrap justify-center h-fit">
         <div className="text-center w-1/5">
           <input
             className={`block text-6xl border-none font-medium focus:outline-none text-center w-full
@@ -155,12 +205,12 @@ export default function Counter() {
             >
               <img
                 className="h-auto"
-                src="/public/logo-volleytip.png"
+                src="/app/assets/volleytip-short.png"
                 alt="Volleytip Icon"
               />
             </span>
           </Button>
-          <Actions setCount={setVisitorCount} />
+          <Actions setCount={setVisitorCount} isReset={isReset} />
         </div>
 
         <div className="text-center flex-col justify-center items-center">
@@ -168,12 +218,10 @@ export default function Counter() {
             className="bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
             style={{ color: "white" }}
             onClick={() => {
-              if (visitorSetCount < 3) {
-                setVisitorSetCount(visitorSetCount + 1);
-                setIsFinishedBefore(true);
-                setTeamWinnerFinishedBefore(ETeam.VISITOR);
-                onOpen();
-              }
+              setVisitorSetCount(visitorSetCount + 1);
+              setIsFinishedBefore(true);
+              setTeamWinnerFinishedBefore(ETeam.VISITOR);
+              onOpen();
             }}
           >
             {visitorSetCount}
@@ -183,12 +231,10 @@ export default function Counter() {
             className="mt-16 bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
             style={{ color: "white" }}
             onClick={() => {
-              if (localSetCount < 3) {
-                setLocalSetCount(localSetCount + 1);
-                setIsFinishedBefore(true);
-                setTeamWinnerFinishedBefore(ETeam.LOCAL);
-                onOpen();
-              }
+              setLocalSetCount(localSetCount + 1);
+              setIsFinishedBefore(true);
+              setTeamWinnerFinishedBefore(ETeam.LOCAL);
+              onOpen();
             }}
           >
             {localSetCount}
@@ -225,14 +271,21 @@ export default function Counter() {
             >
               <img
                 className="h-auto"
-                src="/public/logo-volleytip.png"
+                src="/app/assets/volleytip-short.png"
                 alt="Volleytip Icon"
               />
             </span>
           </Button>
-          <Actions setCount={setVisitorCount} />
+          <Actions setCount={setVisitorCount} isReset={isReset} />
         </div>
       </div>
+      <button
+        className="w-auto p-2 border-2 h-fit mt-6 border-blue-volleytip rounded-md flex text-3xl mx-auto"
+        style={{ color: "white" }}
+        onClick={handleReset}
+      >
+        Reiniciar
+      </button>
     </main>
   );
 }

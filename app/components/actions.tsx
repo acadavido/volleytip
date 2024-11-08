@@ -5,14 +5,29 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
 import { Timer } from "./timer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function Actions({ setCount }: any) {
+interface ActionsProps {
+  setCount: (value: (prev: number) => number) => void;
+  isReset: boolean;
+}
+
+export function Actions({ setCount, isReset }: ActionsProps) {
   const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
   const [isFirstTimerTriggered, setIsFirstTimerTriggered] =
     useState<boolean>(false);
   const [isSecondTimerTriggered, setIsSecondTimerTriggered] =
     useState<boolean>(false);
+
+  const handleTimerReset = () => {
+    setIsFirstTimerTriggered(false);
+    setIsSecondTimerTriggered(false);
+    setIsTimerActive(false);
+  };
+
+  useEffect(() => {
+    isReset && handleTimerReset();
+  }, [isReset]);
 
   return (
     <>
