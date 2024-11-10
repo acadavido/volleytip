@@ -31,50 +31,51 @@ export function Actions({ setCount, isReset }: ActionsProps) {
 
   return (
     <>
-      <div className="flex justify-between m-auto mt-2 w-56">
-        <div className="flex">
-          <Button
-            className="min-w-12 bg-transparent"
-            style={{ color: "white" }}
-            onClick={() =>
-              setCount((prev: number) => (prev > 0 ? prev - 1 : prev))
-            }
-          >
-            <FontAwesomeIcon icon={faSquareMinus} className="w-6 h-6 m-auto" />
-          </Button>
+      <div className="flex justify-between mt-2 w-32 sm:w-52 md:w-56">
+        <Button
+          className="w-1/4 bg-transparent min-w-0"
+          style={{ color: "white" }}
+          onClick={() =>
+            setCount((prev: number) => (prev > 0 ? prev - 1 : prev))
+          }
+        >
+          <FontAwesomeIcon
+            icon={faSquareMinus}
+            className="w-4 h-4 sm:w-6 sm:h-6 m-auto"
+          />
+        </Button>
 
-          <Button
-            className="min-w-12 bg-transparent"
-            isDisabled={isFirstTimerTriggered}
-            disabled={isTimerActive}
-          >
-            <FontAwesomeIcon
-              icon={faHourglass}
-              color="white"
-              className="w-6 h-6 m-auto"
-              onClick={() => {
-                setIsTimerActive(true);
-                setIsFirstTimerTriggered(true);
-              }}
-            />
-          </Button>
-          <Button
-            className="min-w-12 bg-transparent"
-            isDisabled={isSecondTimerTriggered}
-            disabled={isTimerActive}
-          >
-            <FontAwesomeIcon
-              icon={faHourglass}
-              color="white"
-              className="w-6 h-6 m-auto"
-              onClick={() => {
-                setIsTimerActive(true);
-                setIsSecondTimerTriggered(true);
-              }}
-            />
-          </Button>
-        </div>
-        <div className="mr-0">
+        <Button
+          className="w-1/4 bg-transparent min-w-0"
+          isDisabled={isFirstTimerTriggered}
+          disabled={isTimerActive}
+        >
+          <FontAwesomeIcon
+            icon={faHourglass}
+            color="white"
+            className="w-4 h-4 sm:w-6 sm:h-6 m-auto"
+            onClick={() => {
+              setIsTimerActive(true);
+              setIsFirstTimerTriggered(true);
+            }}
+          />
+        </Button>
+        <Button
+          className="w-1/4 bg-transparent min-w-0"
+          isDisabled={isSecondTimerTriggered}
+          disabled={isTimerActive}
+        >
+          <FontAwesomeIcon
+            icon={faHourglass}
+            color="white"
+            className="w-4 h-4 sm:w-6 sm:h-6 m-auto"
+            onClick={() => {
+              setIsTimerActive(true);
+              setIsSecondTimerTriggered(true);
+            }}
+          />
+        </Button>
+        <div className="w-1/4">
           {isTimerActive && (
             <Timer
               isTimerActive={isTimerActive}

@@ -7,6 +7,14 @@ export default {
 
   ],
   theme: {
+    screens: {
+      'xs': '450px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px'
+    },
     colors: {
       'purple-volleytip': '#1f0738',
       'blue-volleytip': '#05f8f2',

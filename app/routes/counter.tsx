@@ -136,7 +136,7 @@ export default function Counter() {
   };
 
   return (
-    <main className="flex flex-col justify-center p-10 bg-purple-volleytip min-h-screen">
+    <main className="flex flex-col justify-center  bg-purple-volleytip min-h-content h-screen">
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -174,24 +174,24 @@ export default function Counter() {
           )}
         </ModalContent>
       </Modal>
-      <div className="justify-center mx-auto mb-10">
+      <div className="justify-center mx-auto mb-2 md:mb-10">
         <img
-          className="h-44"
+          className="h-20 md:h-32"
           src="/app/assets/logo-volleytip-vertical.png"
           alt="Volleytip Icon"
         />
       </div>
-      <div className="flex flex-wrap justify-center h-fit">
-        <div className="text-center w-1/5">
+      <div className="flex justify-center h-fit">
+        <div className="text-center min-w-min sm:w-[20%]">
           <input
-            className={`block text-6xl border-none font-medium focus:outline-none text-center w-full
+            className={`block text-4xl sm:text-5xl md:text-6xl border-none font-medium focus:outline-none text-center w-full
              `}
             style={{ color: "white", backgroundColor: "transparent" }}
             name={ETeam.VISITOR}
             defaultValue="Visitor"
           />
           <Button
-            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded-md relative"
+            className="bg-blue-volleytip text-purple-volleytip font-bold text-6xl md:text-8xl w-32 h-32 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 rounded-md relative"
             disableRipple
             onClick={() => {
               incrementCount(ETeam.VISITOR);
@@ -210,35 +210,40 @@ export default function Counter() {
               />
             </span>
           </Button>
-          <Actions setCount={setVisitorCount} isReset={isReset} />
+          <div className="flex justify-center">
+            <Actions setCount={setVisitorCount} isReset={isReset} />
+          </div>
         </div>
 
-        <div className="text-center flex-col justify-center items-center">
-          <button
-            className="bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
-            style={{ color: "white" }}
-            onClick={() => {
-              setVisitorSetCount(visitorSetCount + 1);
-              setIsFinishedBefore(true);
-              setTeamWinnerFinishedBefore(ETeam.VISITOR);
-              onOpen();
-            }}
-          >
-            {visitorSetCount}
-          </button>
+        <div className="text-center flex-col justify-center items-center mt-10 sm:mt-16">
+          <div className="flex justify-center">
+            <button
+              className="bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
+              style={{ color: "white" }}
+              onClick={() => {
+                setVisitorSetCount(visitorSetCount + 1);
+                setIsFinishedBefore(true);
+                setTeamWinnerFinishedBefore(ETeam.VISITOR);
+                onOpen();
+              }}
+            >
+              {visitorSetCount}
+            </button>
 
-          <button
-            className="mt-16 bg-purple-volleytip font-bold text-7xl w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
-            style={{ color: "white" }}
-            onClick={() => {
-              setLocalSetCount(localSetCount + 1);
-              setIsFinishedBefore(true);
-              setTeamWinnerFinishedBefore(ETeam.LOCAL);
-              onOpen();
-            }}
-          >
-            {localSetCount}
-          </button>
+            <button
+              className="bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
+              style={{ color: "white" }}
+              onClick={() => {
+                setLocalSetCount(localSetCount + 1);
+                setIsFinishedBefore(true);
+                setTeamWinnerFinishedBefore(ETeam.LOCAL);
+                onOpen();
+              }}
+            >
+              {localSetCount}
+            </button>
+          </div>
+
           <ul>
             {setsFinished.map((set, index) => (
               <li key={index} className="flex justify-center">
@@ -248,16 +253,16 @@ export default function Counter() {
           </ul>
         </div>
 
-        <div className="text-center w-1/5">
+        <div className="text-center min-w-min sm:w-[20%]">
           <input
-            className={`block text-6xl border-none font-medium focus:outline-none text-center w-full
+            className={`block text-4xl sm:text-5xl md:text-6xl border-none font-medium focus:outline-none text-center w-full
              `}
             style={{ color: "white", backgroundColor: "transparent" }}
             name={ETeam.LOCAL}
             defaultValue="Local"
           />
           <Button
-            className="bg-blue-volleytip text-purple-volleytip font-bold text-8xl w-full w-56 h-56 rounded-md relative"
+            className="bg-blue-volleytip text-purple-volleytip font-bold text-6xl md:text-8xl w-32 h-32 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 rounded-md relative"
             disableRipple
             onClick={() => {
               incrementCount(ETeam.LOCAL);
@@ -276,11 +281,13 @@ export default function Counter() {
               />
             </span>
           </Button>
-          <Actions setCount={setVisitorCount} isReset={isReset} />
+          <div className="flex justify-center">
+            <Actions setCount={setVisitorCount} isReset={isReset} />
+          </div>
         </div>
       </div>
       <button
-        className="w-auto p-2 border-2 h-fit mt-6 border-blue-volleytip rounded-md flex text-3xl mx-auto"
+        className="w-auto p-2 border-2 h-fit mt-6 border-blue-volleytip rounded-md flex text-xl sm:text-3xl mx-auto"
         style={{ color: "white" }}
         onClick={handleReset}
       >
