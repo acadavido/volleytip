@@ -25,7 +25,7 @@ export function Timer({ isTimerActive, setIsTimerActive }: TimerProps) {
 
   return (
     <div className="flex items-center justify-center">
-      <h1 className="text-xl mt-[0.4rem] sm:mt-0 sm:text-3xl" style={{ color: "white" }}>
+      <h1 className="text-xl mt-[0.4rem] sm:mt-0 sm:text-3xl text-[#fff]">
         {seconds}
       </h1>
     </div>

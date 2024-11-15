@@ -5,14 +5,12 @@ export function Set({ local, visitor }: SetDto) {
   return (
     <>
       <div
-        className="w-10 h-6 m-1 border-2 border-blue-volleytip rounded-md flex justify-center items-center"
-        style={{ color: "white" }}
+        className="text-[#fff] w-10 h-6 m-1 border-2 border-blue-volleytip rounded-md flex justify-center items-center"
       >
         {visitor}
       </div>
       <div
-        className="w-10 h-6 m-1 border-2 border-blue-volleytip rounded-md flex justify-center items-center"
-        style={{ color: "white" }}
+        className="text-[#fff] w-10 h-6 m-1 border-2 border-blue-volleytip rounded-md flex justify-center items-center"
       >
         {local}
       </div>

@@ -9,6 +9,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Tooltip,
 } from "@nextui-org/react";
 import { ETeam, SetDto } from "~/dtos/dtos";
 import { Actions } from "~/components/actions";
@@ -67,7 +68,7 @@ export default function Counter() {
         setVisitorCount(visitorCount + 1);
         setLastPressed(ETeam.VISITOR);
         setIsFinishedBefore(false);
-        if (visitorCount >= 25 && visitorCount - localCount >= 1) {
+        if (visitorCount >= 24 && visitorCount - localCount >= 1) {
           onOpen();
         }
       }
@@ -79,7 +80,7 @@ export default function Counter() {
         setLocalCount(localCount + 1);
         setLastPressed(ETeam.LOCAL);
         setIsFinishedBefore(false);
-        if (localCount >= 25 && localCount - visitorCount >= 1) {
+        if (localCount >= 24 && localCount - visitorCount >= 1) {
           onOpen();
         }
       }
@@ -163,9 +164,9 @@ export default function Counter() {
                   No
                 </Button>
                 <Button
-                  color="primary"
                   onPress={onClose}
                   onClick={handleFinishedSet}
+                  className="bg-purple-volleytip opacity-95 text-[#fff]"
                 >
                   Sí
                 </Button>
@@ -176,20 +177,22 @@ export default function Counter() {
       </Modal>
       <div className="justify-center mx-auto mb-2 md:mb-10">
         <img
-          className="h-20 md:h-32"
+          className="h-24 md:h-32"
           src="/app/assets/logo-volleytip-vertical.png"
           alt="Volleytip Icon"
         />
       </div>
       <div className="flex justify-center h-fit">
         <div className="text-center min-w-min sm:w-[20%]">
-          <input
-            className={`block text-4xl sm:text-5xl md:text-6xl border-none font-medium focus:outline-none text-center w-full
+          <Tooltip content="Máximo 8 caracteres">
+            <input
+              className={`text-[#fff] bg-purple-volleytip block text-3xl sm:text-5xl border-none font-medium focus:outline-none text-center w-full
              `}
-            style={{ color: "white", backgroundColor: "transparent" }}
-            name={ETeam.VISITOR}
-            defaultValue="Visitor"
-          />
+              name={ETeam.VISITOR}
+              defaultValue="Visitor"
+              maxLength={8}
+            />
+          </Tooltip>
           <Button
             className="bg-blue-volleytip text-purple-volleytip font-bold text-6xl md:text-8xl w-32 h-32 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 rounded-md relative"
             disableRipple
@@ -211,15 +214,18 @@ export default function Counter() {
             </span>
           </Button>
           <div className="flex justify-center">
-            <Actions setCount={setVisitorCount} isReset={isReset} />
+            <Actions
+              setCount={setVisitorCount}
+              isReset={isReset}
+              team={ETeam.VISITOR}
+            />
           </div>
         </div>
 
         <div className="text-center flex-col justify-center items-center mt-10 sm:mt-16">
           <div className="flex justify-center">
             <button
-              className="bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
-              style={{ color: "white" }}
+              className="text-[#fff] bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
               onClick={() => {
                 setVisitorSetCount(visitorSetCount + 1);
                 setIsFinishedBefore(true);
@@ -231,8 +237,7 @@ export default function Counter() {
             </button>
 
             <button
-              className="bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
-              style={{ color: "white" }}
+              className="text-[#fff] bg-purple-volleytip font-bold text-4xl sm:text-5xl md:text-7xl w-9 sm:w-14 md:w-20 rounded-md shadow hover:bg-blue-600 transition duration-300"
               onClick={() => {
                 setLocalSetCount(localSetCount + 1);
                 setIsFinishedBefore(true);
@@ -254,13 +259,15 @@ export default function Counter() {
         </div>
 
         <div className="text-center min-w-min sm:w-[20%]">
-          <input
-            className={`block text-4xl sm:text-5xl md:text-6xl border-none font-medium focus:outline-none text-center w-full
+          <Tooltip content="Máximo 8 caracteres">
+            <input
+              className={`text-[#fff] bg-purple-volleytip block text-3xl sm:text-5xl border-none font-medium focus:outline-none text-center w-full
              `}
-            style={{ color: "white", backgroundColor: "transparent" }}
-            name={ETeam.LOCAL}
-            defaultValue="Local"
-          />
+              name={ETeam.LOCAL}
+              defaultValue="Local"
+              maxLength={8}
+            />
+          </Tooltip>
           <Button
             className="bg-blue-volleytip text-purple-volleytip font-bold text-6xl md:text-8xl w-32 h-32 xs:w-44 xs:h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 rounded-md relative"
             disableRipple
@@ -282,13 +289,16 @@ export default function Counter() {
             </span>
           </Button>
           <div className="flex justify-center">
-            <Actions setCount={setVisitorCount} isReset={isReset} />
+            <Actions
+              setCount={setVisitorCount}
+              isReset={isReset}
+              team={ETeam.LOCAL}
+            />
           </div>
         </div>
       </div>
       <button
-        className="w-auto p-2 border-2 h-fit mt-6 border-blue-volleytip rounded-md flex text-xl sm:text-3xl mx-auto"
-        style={{ color: "white" }}
+        className="text-[#fff] w-auto p-2 border-2 h-fit mt-6 border-blue-volleytip rounded-md flex text-xl sm:text-3xl mx-auto"
         onClick={handleReset}
       >
         Reiniciar
